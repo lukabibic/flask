@@ -55,7 +55,7 @@ def add_header(r):
 
 @app.route('/')
 def home():
-    return render_template('templates/map.html')
+    return render_template('map.html')
 
 
 def calculate(point1, point2):
