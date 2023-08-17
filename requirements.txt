@@ -11,3 +11,4 @@ networkx
 geopy
 matplotlib
 seaborn
+scikit-learn
