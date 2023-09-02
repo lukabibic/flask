@@ -10,6 +10,7 @@ import seaborn as sns
 from flask import send_file
 import os
 import matplotlib.colors as mcolors
+import pickle
 
 if not os.path.exists('static'):
     os.makedirs('static')
