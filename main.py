@@ -30,6 +30,7 @@ with open('graph_from_place.pkl', 'rb') as f:
 
 
 matrix_image_path = os.path.join(os.getcwd(), 'static', 'output_folder', 'matrix_image.png')
+contour_image_path = os.path.join(os.getcwd(), 'static', 'output_folder', 'contour_image.png')
 
 if os.path.exists(matrix_image_path):
     app.logger.debug("deleting existing file")
