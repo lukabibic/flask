@@ -151,6 +151,44 @@ def calculate_le_lt_matrix():
         'paths': paths,
     })
 
+@app.route('/contour_map', methods=['POST'])
+def generate_contour_map():
+    # Extract marker data from the post request
+    data = request.json
+    latitudes = [point[0] for point in data['markers']]
+    longitudes = [point[1] for point in data['markers']]
+
+    print(latitudes, longitudes)
+
+    # Define Korzo's coordinates
+    korzo_coords = [45.32715328765221, 14.441230595111849]
+    latitudes.append(korzo_coords[0])
+    longitudes.append(korzo_coords[1])
+
+    # Calculate Le/Lt coefficients in relation to Korzo for each marker including Korzo
+    le_lt_values = [calculate(korzo_coords, (lat, lon))[-1] for lat, lon in zip(latitudes, longitudes)]
+
+    # Generate contour map
+    plt.tricontourf(longitudes, latitudes, le_lt_values, 20)
+    plt.colorbar(label='Le/Lt Coefficient')
+
+    # Plotting the markers
+    plt.scatter(longitudes[:-1], latitudes[:-1], color='red', s=10)
+
+    # Adding Korzo point and label it
+    plt.scatter(korzo_coords[1], korzo_coords[0], color='blue', s=40, marker='o')
+    plt.text(korzo_coords[1], korzo_coords[0] + 0.001, 'Korzo', horizontalalignment='center')  # Label for Korzo
+
+    plt.title('Contour map of Le/Lt coefficients')
+
+    # Save to a temporary file and send this as response
+    # temp_filename = "temp_contour_plot.png"
+    plt.savefig(contour_image_path)
+    plt.close()
+
+    return send_file(contour_image_path, mimetype='image/png')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
