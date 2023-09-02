@@ -22,7 +22,11 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 logging.basicConfig(level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
-G = ox.graph_from_place('Rijeka, Croatia', network_type='drive', simplify=False)  # simplify False gives more nodes
+# G = ox.graph_from_place('Rijeka, Croatia', network_type='drive', simplify=False)  # simplify False gives more nodes
+with open('graph_from_place.pkl', 'rb') as f:
+    G = pickle.load(f)
+
+
 
 matrix_image_path = os.path.join(os.getcwd(), 'static', 'output_folder', 'matrix_image.png')
 
